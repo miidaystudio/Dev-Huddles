@@ -1,6 +1,6 @@
 'use client';
 
-import React, { keyframes } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MotionPayload, ViewportMode } from '@/types/motion';
 import { getEaseCSS } from '@/lib/utils';
