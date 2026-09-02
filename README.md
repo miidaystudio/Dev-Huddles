@@ -1,4 +1,3 @@
-Markdown
 # DevHuddle (Kinetic Arena)
 
 > Collaborative engineering workspace for real-world production incident debugging—featuring Yjs CRDT multi-cursor Monaco editing, in-browser React runtimes via Sandpack, and live HTTP API profiling.
@@ -26,29 +25,31 @@ Most technical assessment platforms rely on artificial, single-file DSA puzzles.
 
 ## Architecture
 
-                   ┌──────────────────────────────────────────────┐
-                   │           DevHuddle Workspace Shell          │
-                   │           (Persistent Memory State)          │
-                   └──────────────────────┬───────────────────────┘
-                                          │
-     ┌──────────────────┬─────────────────┼─────────────────┬──────────────────┐
-     ▼                  ▼                 ▼                 ▼                  ▼
-[ Ticket Spec ]   [ Monaco IDE ]   [ Sandpack Preview ] [ API Inspector ] [ Slide Drawer ]
-RFC & Bug Log     Yjs CRDT Sync     Live React Engine   HTTP Console       Live Chat / WS
-│                  │                 │                 │                  │
-└─────────────┬────┴─────────────────┴─────────────────┴──────────────────┘
-│
-▼
+```
+┌──────────────────────────────────────────────┐
+│         DevHuddle Workspace Shell            │
+│         (Persistent Memory State)            │
+└──────────────────────┬───────────────────────┘
+                       │
+  ┌──────────────────┬─┴───────────────┬──────────────────┐
+  ▼                  ▼                 ▼                  ▼
+[ Ticket Spec ] [ Monaco IDE ] [ Sandpack Preview ] [ API Inspector ] [ Slide Drawer ]
+  RFC & Bug Log   Yjs CRDT Sync   Live React Engine   HTTP Console    Live Chat / WS
+  │                  │                 │                  │                 │
+  └─────────────┬────┴─────────────────┴──────────────────┴─────────────────┘
+                │
+                ▼
 Distributed State Brokers (Local / Cloud)
 ├── y-websocket server (CRDT document provider)
 └── Next.js App Router client state
-
+```
 
 ---
 
 ## Quick Start
 
 ### Prerequisites
+
 * Node.js 18.18+ or 20+
 * npm, pnpm, or bun
 
@@ -56,34 +57,42 @@ Distributed State Brokers (Local / Cloud)
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/miidaystudio/Dev-Huddles.git](https://github.com/miidaystudio/Dev-Huddles.git)
+   git clone https://github.com/miidaystudio/Dev-Huddles.git
    cd Dev-Huddles
-### Install dependencies:
+   ```
 
-```bash
-npm install
-```
-### Start the local Yjs WebSocket sync server (Terminal 1):
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-```bash
-npx y-websocket
-(Runs on ws://localhost:1234 by default)
-```
-### Run the Next.js development server (Terminal 2):
+3. **Start the local Yjs WebSocket sync server (Terminal 1):**
+   ```bash
+   npx y-websocket
+   ```
+   *(Runs on `ws://localhost:1234` by default)*
 
-```bash
-npm run dev
-```
-Open the workspace:
-Visit http://localhost:3000 or launch the test incident room directly at http://localhost:3000/room/INC-8420.
+4. **Run the Next.js development server (Terminal 2):**
+   ```bash
+   npm run dev
+   ```
 
-### Tech Stack
-* Framework: Next.js 15 (App Router)
-* Realtime Sync: Yjs, y-websocket, y-monaco
-* Code Editor: @monaco-editor/react
-* Preview Runtime: @codesandbox/sandpack-react
-* Styling & Icons: Tailwind CSS, Lucide React
-*Motion: Lenis, GSAP ScrollTrigger
+5. **Open the workspace:**
+   Visit [http://localhost:3000](http://localhost:3000/) or launch the test incident room directly at [http://localhost:3000/room/INC-8420](http://localhost:3000/room/INC-8420).
 
-License
-Distributed under the MIT License. See LICENSE for details.
+---
+
+## Tech Stack
+
+* **Framework:** Next.js 15 (App Router)
+* **Realtime Sync:** Yjs, y-websocket, y-monaco
+* **Code Editor:** `@monaco-editor/react`
+* **Preview Runtime:** `@codesandbox/sandpack-react`
+* **Styling & Icons:** Tailwind CSS, Lucide React
+* **Motion:** Lenis, GSAP ScrollTrigger
+
+---
+
+## License
+
+Distributed under the MIT License. See [LICENSE](LICENSE) for details.
