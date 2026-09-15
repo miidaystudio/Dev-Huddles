@@ -1,7 +1,7 @@
+import { ENV_CONFIG } from "./src/config/env.js";
 import app from "./src/app.js";
 import { createServer } from "http";
 import { WebSocketServer } from "ws";
-import { ENV_CONFIG } from "./src/config/env.js";
 const server = createServer(app);
 
 // WebSocket Server for Yjs & Peer Presence Tracking

@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "./config/cors.js";
 import mainRouter from "./routes.js";
+import { errorHandler, notFoundHandler } from "./middleware/appError.js";
 
 const app = express();
 
@@ -36,5 +37,11 @@ app.get("/api/incidents/:id", (req, res) => {
 
 // API Route
 app.use("/api", mainRouter);
+
+// Catch unhandled 404 routes
+app.use(notFoundHandler);
+
+// Global Error Handler
+app.use(errorHandler);
 
 export default app;
