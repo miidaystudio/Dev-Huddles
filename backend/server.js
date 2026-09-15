@@ -1,45 +1,12 @@
-const express = require("express");
-const http = require("http");
-const cors = require("cors");
-const { WebSocketServer } = require("ws");
-
-const app = express();
-const PORT = process.env.PORT || 4000;
-
-app.use(cors());
-app.use(express.json());
-
-// Health Check API
-app.get("/api/health", (req, res) => {
-  res.json({
-    status: "online",
-    service: "DevHuddle Kinetic Arena Backend",
-    timestamp: new Date().toISOString(),
-    version: "2.4.0",
-  });
-});
-
-// Incident Specs Mock API Endpoint
-app.get("/api/incidents/:id", (req, res) => {
-  const { id } = req.params;
-  res.json({
-    id: id || "INC-8420",
-    title: "Fix Race Condition in Checkout Hook",
-    severity: "P1 CRITICAL",
-    service: "Checkout Service",
-    affectedUsers: 1420,
-    status: "INVESTIGATING",
-    expectedBehavior:
-      "Mutex lock on submit button, random UUID x-idempotency-key header assertions.",
-    actualBehavior:
-      "Double tap triggers 2 parallel Stripe payment settlements under high network latency.",
-  });
-});
-
-const server = http.createServer(app);
+import { ENV_CONFIG } from "./src/config/env.js";
+import app from "./src/app.js";
+import { createServer } from "http";
+import { WebSocketServer } from "ws";
+const server = createServer(app);
 
 // WebSocket Server for Yjs & Peer Presence Tracking
 const wss = new WebSocketServer({ server });
+const PORT = ENV_CONFIG.PORT;
 
 wss.on("connection", (ws) => {
   console.log("Client connected to DevHuddle Room WS stream");
@@ -48,7 +15,7 @@ wss.on("connection", (ws) => {
     JSON.stringify({
       type: "SYSTEM_EVENT",
       payload: { message: "Connected to Kinetic Arena CRDT Stream" },
-    })
+    }),
   );
 
   ws.on("message", (message) => {
