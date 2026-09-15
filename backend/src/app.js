@@ -1,12 +1,10 @@
 import express from "express";
-import http from "http";
-import cors from "cors";
-import { WebSocketServer } from "ws";
+import cors from "./config/cors.js";
+import mainRouter from "./routes.js";
 
 const app = express();
 
-
-app.use(cors());
+app.use(cors);
 app.use(express.json());
 
 // Health Check API
@@ -36,4 +34,7 @@ app.get("/api/incidents/:id", (req, res) => {
   });
 });
 
-export default app
+// API Route
+app.use("/api", mainRouter);
+
+export default app;
